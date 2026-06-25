@@ -51,16 +51,25 @@ a:hover {
 /* Navigation */
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 1.5rem;
+    left: 5vw;
+    right: 5vw;
+    width: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 5vw;
+    padding: 1rem 2.5rem;
     z-index: 100;
-    mix-blend-mode: difference;
+    background: rgba(10, 10, 10, 0.65);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
+
 
 .logo svg {
     color: #fff;
@@ -92,14 +101,16 @@ a:hover {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-radius: 2px;
-    transition: background 0.3s, color 0.3s;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
 .header-cta:hover {
-    background: var(--text-muted);
-    color: #fff;
+    background: #eaeaea;
+    color: #000;
+    transform: translateY(-1px);
 }
+
 
 .grid-icon {
     display: grid;
@@ -137,8 +148,6 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform-style: preserve-3d;
-    perspective: 1000px;
 }
 
 .text-layer {
@@ -153,28 +162,33 @@ a:hover {
 }
 
 .layer-back {
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
-    transform: translateZ(50px);
-    top: 5%;
-    z-index: 6;
+    color: rgba(255, 255, 255, 0.08);
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+    font-weight: 900;
+    top: 15%;
+    left: 20%;
+    z-index: 4;
 }
 
 .layer-front {
     color: #fff;
-    transform: translateZ(100px);
-    bottom: 5%;
+    font-weight: 300;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    bottom: 15%;
+    right: 20%;
     z-index: 10;
 }
 
 .image-layer {
-    width: 60vw;
-    height: 60vh;
     position: absolute;
+    right: 0;
+    top: 0;
+    width: 60vw;
+    height: 100%;
     z-index: 5;
     overflow: hidden;
-    transform: translateZ(0);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    -webkit-mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 1) 55%);
+    mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 1) 55%);
 }
 
 .image-layer img {
@@ -440,14 +454,17 @@ a:hover {
     font-family: inherit;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
 .submit-btn:hover {
-    background: var(--text-muted);
-    color: #fff;
+    background: #eaeaea;
+    color: #000;
+    transform: translateY(-1px);
 }
+
 
 /* Footer */
 .footer {
@@ -477,4 +494,160 @@ a:hover {
     .contact-grid { grid-template-columns: 1fr; }
     .section-title { font-size: 6vw; }
     .text-layer { font-size: 20vw; }
+    
+    .hero-cta-block {
+        position: relative;
+        left: 0;
+        top: auto;
+        transform: none;
+        margin-top: 2rem;
+        max-width: 100%;
+        align-items: center;
+        text-align: center;
+        padding: 0 5vw;
+        z-index: 30;
+    }
+    
+    .hero-tagline {
+        font-size: 2.2rem;
+    }
+    
+    .hero-bold-cta {
+        align-self: center;
+    }
+    
+    .hero-section {
+        height: auto;
+        padding: 8rem 0 4rem;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .hero-container {
+        height: 60vh;
+    }
 }
+
+/* General Curvy CTA Button Styling */
+.cta-btn {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    padding: 1rem 2.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+.cta-btn.secondary-cta {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-btn.secondary-cta:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Form Success State styling */
+.form-success {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.success-icon {
+    margin-bottom: 1.5rem;
+}
+
+.form-success h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.form-success p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero Catchy Left Block */
+.hero-cta-block {
+    position: absolute;
+    left: 8vw;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 25;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    pointer-events: auto;
+}
+
+.hero-subtitle {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    letter-spacing: -0.01em;
+}
+
+.hero-bold-cta {
+    display: inline-block;
+    align-self: flex-start;
+    background: #fff;
+    color: #000;
+    padding: 1.1rem 2.8rem;
+    font-size: 1rem;
+    font-weight: 800; /* Bold */
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 1.8rem;
+}
+
+.hero-bold-cta:hover {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.08);
+}
+

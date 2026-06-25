@@ -32,7 +32,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -46,12 +46,12 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="logo">
+        <a href="#home" class="logo" aria-label="Home">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 4h16v16H4V4z"/>
                 <path d="M8 8h4v8H8z"/>
             </svg>
-        </div>
+        </a>
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#about">About Us</a>
@@ -60,27 +60,22 @@
         </div>
         <div class="header-right">
             <a href="#contact" class="header-cta">Get Free Consultation</a>
-            <div class="menu-icon">
-                <div class="grid-icon">
-                    <span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                </div>
-            </div>
         </div>
     </nav>
 
     <!-- Hero Section with 3D Parallax -->
     <section id="home" class="hero-section">
-        <h1 class="hero-container" id="parallax-container">
-            <!-- Layers for Parallax Effect -->
-            <span class="text-layer layer-back" data-speed="0.2">FINANCIAL</span>
-            <span class="image-layer" data-speed="0.4" style="display:block">
-                <!-- Using an unsplash architecture/abstract black and white image -->
+        <div class="hero-container" id="parallax-container">
+            <div class="image-layer">
                 <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop&grayscale" alt="Financial Return Services - Professional Accounting and Tax Compliance in India">
-            </span>
-            <span class="text-layer layer-front" data-speed="0.7">SERVICES</span>
-        </h1>
+            </div>
+        </div>
+        <div class="hero-cta-block">
+            <h1 class="hero-tagline">Precise Returns.<br>Optimal Growth.</h1>
+            <p class="hero-subtitle">Expert Tax, ITR & GST Compliance services designed to streamline your business financial landscape with complete precision and transparency.</p>
+            <a href="#contact" class="hero-bold-cta">Get Free Consultation &rarr;</a>
+        </div>
+
         <div class="hero-meta">
             <div class="meta-item">
                 <p class="meta-label">Est.</p>
@@ -105,6 +100,9 @@
                 <li>&bull; Comprehensive Corporate Compliances</li>
                 <li>&bull; Complete Precision in Portfolio Management</li>
             </ul>
+            <div style="margin-top: 3rem;">
+                <a href="#contact" class="cta-btn secondary-cta">Learn More & Book</a>
+            </div>
         </div>
     </section>
 
@@ -178,7 +176,9 @@
                         <p>Diligent processing and tracking of ESIC returns safeguarding your employees and management.</p>
                     </div>
                 </div>
-
+            </div>
+            <div style="text-align: center; margin-top: 5rem;">
+                <a href="#contact" class="cta-btn">Get Started with Us</a>
             </div>
         </div>
     </section>
@@ -225,8 +225,8 @@
                         +91 xxxxx xxxxx
                     </div>
                 </div>
-                <div class="contact-form">
-                    <form onsubmit="event.preventDefault(); alert('Message sent!');">
+                <div class="contact-form" id="contact-form-container">
+                    <form id="consultation-form">
                         <div class="input-group">
                             <input type="text" placeholder="Your Name" required>
                         </div>
@@ -242,6 +242,16 @@
                             100% Secure & Confidential (SSL Encrypted)
                         </div>
                     </form>
+                    <div id="form-success-message" class="form-success" style="display: none;">
+                        <div class="success-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Message Sent!</h3>
+                        <p>Thank you for reaching out. We will get back to you shortly.</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,71 +1,75 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 3D Parallax Effect for Hero
-    const parallaxContainer = document.getElementById('parallax-container');
-    const layers = document.querySelectorAll('.text-layer, .image-layer');
 
-    if (parallaxContainer && window.innerWidth > 900) {
-        parallaxContainer.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
 
-            layers.forEach(layer => {
-                const speed = layer.getAttribute('data-speed');
-                const isImage = layer.classList.contains('image-layer');
-                const isLayerBack = layer.classList.contains('layer-back');
-                const isLayerFront = layer.classList.contains('layer-front');
-                
-                // Base transforms depending on the layer's initial z-position
-                let baseZ = 0;
-                if (isLayerBack) baseZ = 50;
-                if (isLayerFront) baseZ = 100;
+    // Custom smooth scroll function with customizable timing and cubic easing
+    function smoothScrollTo(targetSelector, duration = 800) {
+        const targetElement = document.querySelector(targetSelector);
+        if (!targetElement) return;
 
-                const x = xAxis * speed;
-                const y = yAxis * speed;
+        const headerOffset = 100; // slightly increased offset for float curvy header spacing
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
 
-                if (isImage) {
-                    layer.style.transform = `translateZ(0) rotateY(${xAxis * 0.5}deg) rotateX(${-yAxis * 0.5}deg) translateX(${x * 2}px) translateY(${y * 2}px)`;
-                } else {
-                    layer.style.transform = `translateZ(${baseZ}px) translateX(${x}px) translateY(${y}px)`;
-                }
-            });
-        });
+        function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const run = easeInOutCubic(timeElapsed, startPosition, distance, duration);
+            window.scrollTo(0, run);
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        }
 
-        // Reset on mouse leave
-        parallaxContainer.addEventListener('mouseleave', () => {
-            layers.forEach(layer => {
-                const isLayerBack = layer.classList.contains('layer-back');
-                const isLayerFront = layer.classList.contains('layer-front');
-                
-                let baseZ = 0;
-                if (isLayerBack) baseZ = 50;
-                if (isLayerFront) baseZ = 100;
+        // Cubic easing function for premium feel
+        function easeInOutCubic(t, b, c, d) {
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t * t + b;
+            t -= 2;
+            return c / 2 * (t * t * t + 2) + b;
+        }
 
-                layer.style.transform = `translateZ(${baseZ}px) translateX(0) translateY(0) rotateY(0) rotateX(0)`;
-                layer.style.transition = 'transform 0.5s ease-out';
-            });
-        });
-
-        // Remove transition during mousemove for instant feedback
-        parallaxContainer.addEventListener('mouseenter', () => {
-            layers.forEach(layer => {
-                layer.style.transition = 'none';
-            });
-        });
+        requestAnimationFrame(animation);
     }
 
-    // Smooth scroll for nav links (Vanilla)
+    // Apply custom smooth scroll to all local anchor links (CTAs and logo)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop,
-                    behavior: 'smooth'
-                });
-            }
+            smoothScrollTo(targetId, 800); // 0.8s duration for snappy, premium transition
         });
     });
+
+    // Handle Form Submission
+    const contactForm = document.getElementById('consultation-form');
+    const successMessage = document.getElementById('form-success-message');
+
+    if (contactForm && successMessage) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Fade out form
+            contactForm.style.transition = 'opacity 0.4s ease';
+            contactForm.style.opacity = '0';
+            
+            setTimeout(() => {
+                contactForm.style.display = 'none';
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                successMessage.style.opacity = '0';
+                successMessage.style.transform = 'translateY(10px)';
+                successMessage.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                
+                // Force reflow
+                successMessage.offsetHeight;
+                
+                successMessage.style.opacity = '1';
+                successMessage.style.transform = 'translateY(0)';
+            }, 400);
+        });
+    }
 });
+
