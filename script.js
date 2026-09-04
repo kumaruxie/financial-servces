@@ -1,12 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- Mobile Menu Toggle Logic ---
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navLinks = document.getElementById('nav-links');
+    const navBackdrop = document.getElementById('nav-backdrop');
 
-    // Custom smooth scroll function with customizable timing and cubic easing
+    function toggleMobileMenu(forceClose = false) {
+        if (!mobileToggle || !navLinks) return;
+
+        const isOpen = forceClose ? false : !navLinks.classList.contains('active');
+
+        mobileToggle.classList.toggle('active', isOpen);
+        mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        navLinks.classList.toggle('active', isOpen);
+
+        if (navBackdrop) {
+            navBackdrop.classList.toggle('active', isOpen);
+        }
+
+        // Prevent body scroll when mobile menu is open
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
+    }
+
+    if (navBackdrop) {
+        navBackdrop.addEventListener('click', () => {
+            toggleMobileMenu(true);
+        });
+    }
+
+    // Close mobile menu on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks && navLinks.classList.contains('active')) {
+            toggleMobileMenu(true);
+        }
+    });
+
+    // --- Custom Smooth Scroll Function ---
     function smoothScrollTo(targetSelector, duration = 800) {
         const targetElement = document.querySelector(targetSelector);
         if (!targetElement) return;
 
-        const headerOffset = 100; // slightly increased offset for float curvy header spacing
+        // Dynamic header offset based on screen width
+        const isMobile = window.innerWidth <= 900;
+        const headerOffset = isMobile ? 80 : 100;
         const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerOffset;
         const startPosition = window.pageYOffset;
         const distance = targetPosition - startPosition;
@@ -33,16 +76,24 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animation);
     }
 
-    // Apply custom smooth scroll to all local anchor links (CTAs and logo)
+    // Apply custom smooth scroll to all local anchor links (CTAs and nav links)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            smoothScrollTo(targetId, 800); // 0.8s duration for snappy, premium transition
+            if (!targetId || targetId === '#') return;
+
+            e.preventDefault();
+
+            // Close mobile menu if open
+            if (navLinks && navLinks.classList.contains('active')) {
+                toggleMobileMenu(true);
+            }
+
+            smoothScrollTo(targetId, 800);
         });
     });
 
-    // Handle Form Submission
+    // --- Handle Form Submission ---
     const contactForm = document.getElementById('consultation-form');
     const successMessage = document.getElementById('form-success-message');
 
@@ -72,4 +123,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
